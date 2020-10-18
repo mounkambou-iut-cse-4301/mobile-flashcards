@@ -1,43 +1,51 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, TextInput, Button } from 'react-native'
+import { View, StyleSheet, TextInput, Button } from 'react-native'
 
-
-
-
-class AddDeck extends Component {
+class AddCard extends Component {
     state = {
-        text: ''
+        question: '',
+        answer:'',
     }
 
-    handleChange = text => {
-        this.setState({ text })
+    handleChangeQuestion = question => {
+        this.setState({ question })
+    }
+
+    handleChangeAnswer = answer => {
+        this.setState({ answer })
     }
 
     handleSubmit = () => {
-        //this.setState(() => ({ text: '' }))
+        //this.setState(() => ({ question: '', answer:''}))
     }
 
     render() {
         return (
             <View style={styles.container}>
                 <View style={{ height: 60 }} />
+
                 <View style={styles.block}>
-                    <Text style={styles.title}>What is the title of your new deck ?</Text>
+                    <TextInput
+                    placeholder='Question'
+                        style={styles.input}
+                        value={this.state.question}
+                        onChangeText={this.handleChangeQuestion}
+                    />
                 </View>
                 <View style={styles.block}>
                     <TextInput
-                    placeholder='Deck title'
+                    placeholder='Answer'
                         style={styles.input}
-                        value={this.state.text}
-                        onChangeText={this.handleChange}
+                        value={this.state.answer}
+                        onChangeText={this.handleChangeAnswer}
                     />
                 </View>
                 <View style={styles.block}>
                 <Button
                     style={styles.button}
                     onPress={this.handleSubmit}
-                    disabled={this.state.text === ''}
-                    title="Create Deck"
+                    disabled={this.state.question === ''|| this.state.answer === ''}
+                    title="Submit"
                 />
                 </View>
             </View>
@@ -54,14 +62,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         margin:20
     },
-    title: {
-        textAlign: 'center',
-        fontSize: 32
-    },
     input: {
         borderWidth: 1,
-        borderColor: '#808080',
-        backgroundColor: '#fff',
         paddingLeft: 10,
         paddingRight: 10,
         borderRadius: 5,
@@ -70,11 +72,11 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     button: {
-        backgroundColor: '#ddd',
+        backgroundColor: '#dd0',
         borderColor: '#000',
         margin:20
     }
 
 })
 
-export default AddDeck
+export default AddCard

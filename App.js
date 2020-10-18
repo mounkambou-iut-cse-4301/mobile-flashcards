@@ -1,13 +1,27 @@
 import 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
-import { StyleSheet, Text, View, Platform } from 'react-native'
+import { View, Platform } from 'react-native'
 import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import { Ionicons, FontAwesome } from "@expo/vector-icons"
+import { FontAwesome } from "@expo/vector-icons"
+import Constants from "expo-constants"
 import DeckList from './components/DeckList'
 import AddDeck from './components/AddDeck'
+import AddCard from './components/AddCard'
+import DeckDetail from './components/DeckDetail'
+import Quiz from './components/Quiz'
+import {white,jungleGreen,blue } from "./utils/colors"
+
+
+function UdaciStatusBar({ backgroundColor, ...props }) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
 
 const Tabs = Platform.OS === "ios" ? createBottomTabNavigator() : createMaterialTopTabNavigator()
 const TabNav = () => (
@@ -19,20 +33,20 @@ const TabNav = () => (
         if (route.name === "Deck List") {
           icon = <FontAwesome name='bookmark'
             size={30}
-            color='#29AB87' />
+            color={jungleGreen} />
         } else if (route.name === "Add Deck") {
-          icon = <FontAwesome name='plus-square' size={30} color='#29AB87' />
+          icon = <FontAwesome name='plus-square' size={30} color={jungleGreen} />
         }
         return icon;
       },
     })}
     tabBarOptions={{
       header: null,
-      activeTintColor: Platform.OS === "ios" ? '#00f' : '#fff',
+      activeTintColor: Platform.OS === "ios" ? blue : white,
       showIcon: true,
       style: {
         height: 80,
-        backgroundColor: Platform.OS === "ios" ? '#fff' : '#00f',
+        backgroundColor: Platform.OS === "ios" ? white : blue,
         shadowColor: "rgba(0, 0, 0, 0.24)",
         shadowOffset: {
           width: 0,
@@ -52,7 +66,8 @@ export default function App() {
   return (
     <View style={{ flex: 1 }}>
       <NavigationContainer>
-        <TabNav />
+      <UdaciStatusBar backgroundColor={blue} barStyle="light-content" />
+        <Quiz />
         <StatusBar style="auto" />
       </NavigationContainer>
     </View>
