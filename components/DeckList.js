@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 
+
 class DeckList extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity  style={styles.button}>
+                <TouchableOpacity  style={styles.button}
+                   onPress={()=>this.props.navigation.navigate('DeckDetail',{ entryId: 'Home'})}
+                >
                     <Text>Deck1</Text>
                     <Text>0 cards</Text>
                 </TouchableOpacity>

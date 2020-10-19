@@ -1,20 +1,32 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import { black, white,red,champagne } from "../utils/colors"
+import { black, white, red, champagne } from "../utils/colors"
 
 
 class DeckDetail extends Component {
+    setTitle = (entryId) => {
+        if (!entryId) return
+
+        this.props.navigation.setOptions({
+            title: 'DeckDetail'
+        })
+    }
+
     render() {
+        const {entryId} = this.props.route.params
+        this.setTitle(entryId)
         return (
             <View style={styles.container}>
                 <View style={styles.center}>
-                    <Text style={{fontWeight:"bold", fontSize:20}}>Deck1</Text>
+                    <Text style={{ fontWeight: "bold", fontSize: 20 }}>Deck1</Text>
                     <Text>0 cards</Text>
                 </View>
-                <TouchableOpacity style={[styles.button, { backgroundColor:champagne }]}>
+                <TouchableOpacity style={[styles.button, { backgroundColor: champagne }]}
+                 onPress={()=>this.props.navigation.navigate('AddCard',{ entryId: 'AddCard'})} >
                     <Text style={{ color: black }}>Add Card</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, { backgroundColor: black }]}>
+                <TouchableOpacity style={[styles.button, { backgroundColor: black }]}
+                  onPress={()=>this.props.navigation.navigate('Quiz',{ name: 'Quiz'})} >
                     <Text style={{ color: white }}>Start Quiz</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.button, { color: red }]}>
@@ -44,9 +56,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#000'
     },
-    center:{
+    center: {
         alignItems: "center",
-        margin:20,
+        margin: 20,
 
     }
 

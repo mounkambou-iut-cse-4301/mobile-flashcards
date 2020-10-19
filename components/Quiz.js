@@ -4,7 +4,17 @@ import { black, white,red,champagne,green } from "../utils/colors"
 
 class Quiz extends Component {
 
+    setTitle = (name) => {
+        if (!name) return
+
+        this.props.navigation.setOptions({
+            title: 'Quiz'
+        })
+    }
+
     render() {
+        const {name} = this.props.route.params
+        this.setTitle(name)
         return (
             <View style={styles.container}>
                 <View style={styles.center}>

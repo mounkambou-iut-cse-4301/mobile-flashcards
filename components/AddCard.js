@@ -2,6 +2,15 @@ import React, { Component } from 'react'
 import { View, StyleSheet, TextInput, Button } from 'react-native'
 
 class AddCard extends Component {
+
+    setTitle = (entryId) => {
+        if (!entryId) return
+
+        this.props.navigation.setOptions({
+            title: 'AddCard'
+        })
+    }
+
     state = {
         question: '',
         answer:'',
@@ -20,6 +29,8 @@ class AddCard extends Component {
     }
 
     render() {
+        const {entryId} = this.props.route.params
+        this.setTitle(entryId)
         return (
             <View style={styles.container}>
                 <View style={{ height: 60 }} />
