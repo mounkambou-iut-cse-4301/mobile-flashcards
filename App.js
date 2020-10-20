@@ -14,6 +14,9 @@ import AddCard from './components/AddCard'
 import DeckDetail from './components/DeckDetail'
 import Quiz from './components/Quiz'
 import { white, jungleGreen, blue } from "./utils/colors"
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
 
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
@@ -84,7 +87,7 @@ const MainNav = () => (
         },
       }}
     />
-        <Stack.Screen
+    <Stack.Screen
       name="AddCard"
       component={AddCard}
       options={{
@@ -94,7 +97,7 @@ const MainNav = () => (
         },
       }}
     />
-            <Stack.Screen
+    <Stack.Screen
       name="Quiz"
       component={Quiz}
       options={{
@@ -107,15 +110,18 @@ const MainNav = () => (
   </Stack.Navigator>
 )
 
+
 export default function App() {
   return (
-    <View style={{ flex: 1 }}>
-      <NavigationContainer>
-        <UdaciStatusBar backgroundColor={blue} barStyle="light-content" />
-        <MainNav />
-        <StatusBar style="auto" />
-      </NavigationContainer>
-    </View>
+    <Provider store={createStore( reducer)}>
+      <View style={{ flex: 1 }}>
+        <NavigationContainer>
+          <UdaciStatusBar backgroundColor={blue} barStyle="light-content" />
+          <MainNav />
+          <StatusBar style="auto" />
+        </NavigationContainer>
+      </View>
+    </Provider>
   )
 }
 

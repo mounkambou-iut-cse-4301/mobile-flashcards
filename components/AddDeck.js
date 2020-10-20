@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, TextInput, Button } from 'react-native'
-
-
+import { saveDeckTitle } from '../utils/api'
+import { addDeck } from '../actions'
+import {connect} from 'react-redux'
 
 
 class AddDeck extends Component {
@@ -14,8 +15,17 @@ class AddDeck extends Component {
     }
 
     handleSubmit = () => {
-        //this.setState(() => ({ text: '' }))
+        const { text } = this.state
+        const title=text
+
+        
+
+        saveDeckTitle(title)
+        this.props.dispatch(addDeck(title))
+        this.props.navigation.navigate('DeckDetail', { entryId: title })
+        this.setState(() => ({ text: '' }))
     }
+
 
     render() {
         return (
@@ -26,19 +36,19 @@ class AddDeck extends Component {
                 </View>
                 <View style={styles.block}>
                     <TextInput
-                    placeholder='Deck title'
+                        placeholder='Deck title'
                         style={styles.input}
                         value={this.state.text}
                         onChangeText={this.handleChange}
                     />
                 </View>
                 <View style={styles.block}>
-                <Button
-                    style={styles.button}
-                    onPress={this.handleSubmit}
-                    disabled={this.state.text === ''}
-                    title="Create Deck"
-                />
+                    <Button
+                        style={styles.button}
+                        onPress={this.handleSubmit}
+                        disabled={this.state.text === ''}
+                        title="Create Deck"
+                    />
                 </View>
             </View>
         )
@@ -52,7 +62,7 @@ const styles = StyleSheet.create({
     },
     block: {
         marginBottom: 20,
-        margin:20
+        margin: 20
     },
     title: {
         textAlign: 'center',
@@ -72,9 +82,9 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#ddd',
         borderColor: '#000',
-        margin:20
+        margin: 20
     }
 
 })
 
-export default AddDeck
+export default connect()(AddDeck)
