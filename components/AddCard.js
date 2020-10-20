@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, TextInput, Button } from 'react-native'
+import { addCard } from '../actions'
+import { connect } from 'react-redux'
+import { addCardToDeck } from '../utils/api'
 
 class AddCard extends Component {
 
@@ -13,7 +16,7 @@ class AddCard extends Component {
 
     state = {
         question: '',
-        answer:'',
+        answer: '',
     }
 
     handleChangeQuestion = question => {
@@ -24,20 +27,26 @@ class AddCard extends Component {
         this.setState({ answer })
     }
 
-    handleSubmit = () => {
-        //this.setState(() => ({ question: '', answer:''}))
+    handleSubmit = (deck) => {
+        const { question, answer } = this.state
+        this.props.dispatch(addCard({ question, answer, deck }))
+        addCardToDeck(deck, { question, answer })
+        this.props.navigation.navigate('DeckDetail', { entryId: deck })
+        this.setState(() => ({ question: '', answer: '' }))
+        
     }
 
     render() {
-        const {entryId} = this.props.route.params
+        const { entryId } = this.props.route.params
         this.setTitle(entryId)
+        const deck = this.props.route.params.entryId
         return (
             <View style={styles.container}>
                 <View style={{ height: 60 }} />
 
                 <View style={styles.block}>
                     <TextInput
-                    placeholder='Question'
+                        placeholder='Question'
                         style={styles.input}
                         value={this.state.question}
                         onChangeText={this.handleChangeQuestion}
@@ -45,19 +54,19 @@ class AddCard extends Component {
                 </View>
                 <View style={styles.block}>
                     <TextInput
-                    placeholder='Answer'
+                        placeholder='Answer'
                         style={styles.input}
                         value={this.state.answer}
                         onChangeText={this.handleChangeAnswer}
                     />
                 </View>
                 <View style={styles.block}>
-                <Button
-                    style={styles.button}
-                    onPress={this.handleSubmit}
-                    disabled={this.state.question === ''|| this.state.answer === ''}
-                    title="Submit"
-                />
+                    <Button
+                        style={styles.button}
+                        onPress={() => this.handleSubmit(deck)}
+                        disabled={this.state.question === '' || this.state.answer === ''}
+                        title="Submit"
+                    />
                 </View>
             </View>
         )
@@ -71,7 +80,7 @@ const styles = StyleSheet.create({
     },
     block: {
         marginBottom: 20,
-        margin:20
+        margin: 20
     },
     input: {
         borderWidth: 1,
@@ -85,9 +94,9 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#dd0',
         borderColor: '#000',
-        margin:20
+        margin: 20
     }
 
 })
 
-export default AddCard
+export default connect()(AddCard)

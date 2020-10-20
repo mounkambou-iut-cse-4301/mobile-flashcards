@@ -26,7 +26,7 @@ class DeckDetail extends Component {
                     <Text>{decks[deck].questions.length}</Text>
                 </View>
                 <TouchableOpacity style={[styles.button, { backgroundColor: champagne }]}
-                    onPress={() => this.props.navigation.navigate('AddCard', { entryId: 'AddCard' })} >
+                    onPress={() => this.props.navigation.navigate('AddCard', { entryId: deck })} >
                     <Text style={{ color: black }}>Add Card</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.button, { backgroundColor: black }]}
