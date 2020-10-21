@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text,TouchableOpacity } from 'react-native'
 import { black, white, red, champagne, green } from "../utils/colors"
 import { connect } from 'react-redux'
 
@@ -30,8 +30,7 @@ class Quiz extends Component {
         const deck = this.props.route.params.entryId
         const { decks } = this.props
         const correct = decks[deck].questions[questionCount].answer.toLowerCase()
-        console.log('hgy2gy2gy', correct);
-        console.log('answer', answer);
+
         if (answer === correct) {
             this.setState(prevState => ({
                 correctAnswer: prevState.correctAnswer + 1
@@ -99,7 +98,7 @@ class Quiz extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.button, { backgroundColor: champagne }]}
                         onPress={() => this.props.navigation.navigate('DeckDetail', { entryId: deck })}>
-                        <Text style={{ color: black }}>Home</Text>
+                        <Text style={{ color: black }}>Back</Text>
                     </TouchableOpacity>
                 </View>
             )
@@ -120,11 +119,11 @@ class Quiz extends Component {
                 {this.state.seeQuestion
                     ? <TouchableOpacity style={[styles.button, { backgroundColor: champagne }]}
                         onPress={this.seeAnswer}>
-                        <Text style={{ color: black }}> Answer</Text>
+                        <Text style={{ color: black }}>Show Answer</Text>
                     </TouchableOpacity>
                     : <TouchableOpacity style={[styles.button, { backgroundColor: champagne }]}
                         onPress={this.seeAnswer}>
-                        <Text style={{ color: black }}>Question</Text>
+                        <Text style={{ color: black }}>Show Question</Text>
                     </TouchableOpacity>
                 }
                 <TouchableOpacity style={[styles.button, { backgroundColor: green }]}

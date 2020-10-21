@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { black, white, red, champagne } from "../utils/colors"
-import { getData } from '../utils/api'
 import { connect } from 'react-redux'
 
 class DeckDetail extends Component {
@@ -32,9 +31,6 @@ class DeckDetail extends Component {
                 <TouchableOpacity style={[styles.button, { backgroundColor: black }]}
                     onPress={() => this.props.navigation.navigate('Quiz', { entryId: deck })} >
                     <Text style={{ color: white }}>Start Quiz</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, { color: red }]}>
-                    <Text style={{ color: red }}>Delete Deck</Text>
                 </TouchableOpacity>
             </View>
         )

@@ -17,6 +17,7 @@ import { white, jungleGreen, blue } from "./utils/colors"
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
+import { setLocalNotification } from './utils/helpers'
 
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
@@ -111,17 +112,21 @@ const MainNav = () => (
 )
 
 
-export default function App() {
-  return (
-    <Provider store={createStore( reducer)}>
-      <View style={{ flex: 1 }}>
-        <NavigationContainer>
-          <UdaciStatusBar backgroundColor={blue} barStyle="light-content" />
-          <MainNav />
-          <StatusBar style="auto" />
-        </NavigationContainer>
-      </View>
-    </Provider>
-  )
+export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
+  render() {
+    return (
+      <Provider store={createStore(reducer)}>
+        <View style={{ flex: 1 }}>
+          <NavigationContainer>
+            <UdaciStatusBar backgroundColor={blue} barStyle="light-content" />
+            <MainNav />
+            <StatusBar style="auto" />
+          </NavigationContainer>
+        </View>
+      </Provider>
+    )
+  }
 }
-
