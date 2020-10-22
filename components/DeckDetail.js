@@ -1,20 +1,12 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import { black, white, red, champagne } from "../utils/colors"
+import { black, white, champagne } from "../utils/colors"
 import { connect } from 'react-redux'
 
 class DeckDetail extends Component {
-    setTitle = (entryId) => {
-        if (!entryId) return
 
-        this.props.navigation.setOptions({
-            title: 'DeckDetail'
-        })
-    }
 
     render() {
-        const { entryId } = this.props.route.params
-        this.setTitle(entryId)
         const deck = this.props.route.params.entryId
         const { decks } = this.props
 

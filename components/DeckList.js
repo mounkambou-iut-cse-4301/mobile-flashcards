@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import { getData } from '../utils/api'
 import { getDecks } from '../utils/api'
 import { receiveDecks } from '../actions'
 import { connect } from 'react-redux'
@@ -25,11 +24,11 @@ class DeckList extends Component {
                             key={deck}
                         >
                             <Text>{title}</Text>
-                            <Text>{questions.length}</Text>
+                            <Text>{questions.length} Cards</Text>
 
                         </TouchableOpacity>
                     )
-                }) : <Text>nothing</Text>}
+                }) : null}
             </View>
         )
     }

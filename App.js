@@ -33,7 +33,7 @@ const TabNav = () => (
   <Tabs.Navigator
     initialRouteName="DeckList"
     screenOptions={({ route }) => ({
-      tabBarIcon: ({ }) => {
+      tabBarIcon: () => {
         let icon;
         if (route.name === "Deck List") {
           icon = <FontAwesome name='bookmark'

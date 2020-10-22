@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage'
+import { AsyncStorage } from "react-native"
 const DECKS_STORAGE_KEY = 'flashcards:decks'
 import { decks } from './_DATA'
 
@@ -19,8 +19,6 @@ export function getDecks(decks) {
 }
 
 
-
-
 export function saveDeckTitle(title) {
     return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
         [title]: {
@@ -29,6 +27,7 @@ export function saveDeckTitle(title) {
         }
     }))
 }
+
 
 
 

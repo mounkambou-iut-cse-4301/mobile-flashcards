@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text,TouchableOpacity } from 'react-native'
 import { black, white, red, champagne, green } from "../utils/colors"
 import { connect } from 'react-redux'
+import { setLocalNotification, clearLocalNotification } from '../utils/helpers'
 
 class Quiz extends Component {
 
@@ -9,61 +10,49 @@ class Quiz extends Component {
         questionCount: 0,
         seeQuestion: true,
         correctAnswer: 0,
-        incorrectAnswer: 0,
     }
 
-    setTitle = (name) => {
-        if (!name) return
-
-        this.props.navigation.setOptions({
-            title: 'Quiz'
-        })
-    }
     seeAnswer = () => {
         this.setState(prevState => ({
             seeQuestion: !prevState.seeQuestion
         }))
     }
 
-    submitAnswer = (answer) => {
-        const { questionCount } = this.state
-        const deck = this.props.route.params.entryId
-        const { decks } = this.props
-        const correct = decks[deck].questions[questionCount].answer.toLowerCase()
+    submitAnswerCorrect = () => {
 
-        if (answer === correct) {
-            this.setState(prevState => ({
-                correctAnswer: prevState.correctAnswer + 1
+
+            this.setState(prevState=>({
+               
+                correctAnswer: prevState.correctAnswer + 1,
+                questionCount: prevState.questionCount + 1,
+                seeQuestion: true
             }))
 
-        } else {
-            this.setState(prevState => ({
-                incorrectAnswer: prevState.incorrectAnswer + 1
+    }
+
+    submitAnswerIncorrect = () => {
+
+            this.setState(prevState=>({
+                questionCount: prevState.questionCount + 1,
+                seeQuestion: true
             }))
-        }
-
-        this.setState({
-            questionCount: this.state.questionCount + 1,
-            seeQuestion: true
-        })
-
 
     }
 
     restartQuiz = () => {
-        this.setState({
+         
+         clearLocalNotification().then(setLocalNotification)
+
+        this.setState(() =>({
             questionCount: 0,
             seeQuestion: true,
             correctAnswer: 0,
-            incorrectAnswer: 0,
-        })
+        }))
+
     }
 
     render() {
-        const { name } = this.props.route.params
         const { decks } = this.props
-
-        this.setTitle(name)
 
         const deck = this.props.route.params.entryId
         const questionCount = this.state.questionCount
@@ -73,7 +62,7 @@ class Quiz extends Component {
         if (questions.length === 0) {
             return (
                 <View style={styles.noQuiz}>
-                    <Text  style={{textAlign:"center"}}>Sorry, you cannot take a quiz because tere are no cards in the deck.</Text>
+                    <Text  style={{textAlign:"center"}}>Sorry, you cannot take a quiz because there are no cards in the deck.</Text>
                 </View>
             )
         }
@@ -86,6 +75,7 @@ class Quiz extends Component {
             return (
                 <View style={styles.container}>
                     <View style={styles.center}>
+                
                         <Text style={styles.topLeft}>Done</Text>
                         <Text style={{ fontWeight: "bold", fontSize: 20, margin: 10 }}>Quiz Completed!!!</Text>
                         <Text style={{ fontWeight: "bold", fontSize: 20, margin: 10, color: green }}>{this.state.correctAnswer}/ {questions.length} Correct</Text>
@@ -127,11 +117,11 @@ class Quiz extends Component {
                     </TouchableOpacity>
                 }
                 <TouchableOpacity style={[styles.button, { backgroundColor: green }]}
-                    onPress={() => this.submitAnswer(questions[questionCount].answer)}>
+                    onPress={this.submitAnswerCorrect}>
                     <Text style={{ color: white }}>Correct</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.button, { backgroundColor: red }]}
-                    onPress={() => this.submitAnswer('incorrect')}>
+                    onPress={this.submitAnswerIncorrect}>
                     <Text style={{ color: white }}>Incorrect</Text>
                 </TouchableOpacity>
             </View>

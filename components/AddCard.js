@@ -6,14 +6,6 @@ import { addCardToDeck } from '../utils/api'
 
 class AddCard extends Component {
 
-    setTitle = (entryId) => {
-        if (!entryId) return
-
-        this.props.navigation.setOptions({
-            title: 'AddCard'
-        })
-    }
-
     state = {
         question: '',
         answer: '',
@@ -37,8 +29,6 @@ class AddCard extends Component {
     }
 
     render() {
-        const { entryId } = this.props.route.params
-        this.setTitle(entryId)
         const deck = this.props.route.params.entryId
         return (
             <View style={styles.container}>
